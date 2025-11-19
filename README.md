@@ -11,15 +11,16 @@ The objective is to accelerate large-scale matrix-based attention computation by
 
 The task computes:
 
-[
-\text{Attention}(Q, K, V) = \text{softmax}\left(\frac{QK^T}{\sqrt{d_k}}\right)V
-]
+$$
+\text{Attention}(Q, K, V)
+= \text{softmax}\left( \frac{QK^T}{\sqrt{d_k}} \right)V
+$$
 
 where
 
-* ( Q \in \mathbb{R}^{m \times d_k} ),
-* ( K \in \mathbb{R}^{n \times d_k} ),
-* ( V \in \mathbb{R}^{n \times d_v} ).
+- \( Q \in \mathbb{R}^{m \times d_k} \)
+- \( K \in \mathbb{R}^{n \times d_k} \)
+- \( V \in \mathbb{R}^{n \times d_v} \)
 
 Each row of ( Q ) attends to all rows of ( K ), followed by a weighted combination of ( V ) through softmax normalization.
 
@@ -33,7 +34,9 @@ The project includes:
 ## Optimization Overview
 
 Our acceleration strategy focuses on **three dimensions**:
-**(1)** memory and data locality, **(2)** computation vectorization, and **(3)** communication/computation overlap.
+1. memory and data locality, 
+2. computation vectorization, 
+3. communication/computation overlap.
 
 ### 1. Memory & Data Locality Optimization
 
@@ -109,12 +112,12 @@ Our acceleration strategy focuses on **three dimensions**:
 
 ## Scalability Insights
 
-![Strong Scalbility Analysis](images/strong_scalability.png)
 * **Strong Scaling:** Near-linear up to 8 processes/node; saturation after 16 due to communication-bound regime.
-![Weak Scalbility Analysis](images/weak_scalability.png)
+![Strong Scalbility Analysis](images/strong_scalability.png)
 * **Weak Scaling:** Maintains horizontal trend up to 8 nodes, indicating balanced workload distribution.
-![Node Distribution](images/process_placement.png)
+![Weak Scalbility Analysis](images/weak_scalability.png)
 * **Node Distribution Impact:** Performance drops (≈ 10%) when splitting processes across more nodes due to higher inter-node latency.
+![Node Distribution](images/process_placement.png)
 
 More performance analysis can be found in report.
 
